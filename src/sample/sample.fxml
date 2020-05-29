@@ -7,9 +7,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 
 <HBox fx:id="myHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -21,19 +21,22 @@
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="shapes" />
+               </toggleGroup>
             </RadioButton>
             <Separator prefWidth="200.0" />
-            <RadioButton fx:id="myEllipse" mnemonicParsing="false" prefHeight="17.0" prefWidth="192.0" text="Ellipse">
+            <RadioButton fx:id="myEllipse" mnemonicParsing="false" prefHeight="17.0" prefWidth="192.0" text="Ellipse" toggleGroup="$shapes">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="myRectangle" mnemonicParsing="false" prefHeight="17.0" prefWidth="240.0" text="Rectangle">
+            <RadioButton fx:id="myRectangle" mnemonicParsing="false" prefHeight="17.0" prefWidth="240.0" text="Rectangle" toggleGroup="$shapes">
                <padding>
                   <Insets left="10.0" right="10.0" />
                </padding>
             </RadioButton>
-            <RadioButton fx:id="myLine" mnemonicParsing="false" prefHeight="17.0" prefWidth="241.0" text="Line">
+            <RadioButton fx:id="myLine" mnemonicParsing="false" prefHeight="17.0" prefWidth="241.0" text="Line" toggleGroup="$shapes">
                <padding>
                   <Insets left="10.0" right="10.0" />
                </padding>
