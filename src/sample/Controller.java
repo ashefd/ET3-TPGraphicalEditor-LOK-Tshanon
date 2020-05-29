@@ -16,6 +16,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -47,10 +48,10 @@ public class Controller {
     private EventHandler myCloneHandler;
     private double clickX;
     private double clickY;
-
     private javafx.scene.shape.Line line;
-    private javafx.scene.shape.Rectangle Rectangle;
-    private javafx.scene.shape.Ellipse Ellipse;
+    private javafx.scene.shape.Rectangle rectangle;
+    private javafx.scene.shape.Ellipse ellipse;
+    private ArrayList<EventHandler> shapeHandler;
 
     @FXML
     public void initialize(){
@@ -60,14 +61,17 @@ public class Controller {
                 line = new Line(mouseEvent.getX(), mouseEvent.getY(),  mouseEvent.getX(),mouseEvent.getY() );
                 myCanvas.getChildren().add(line);
             }else if(myRectangle.isSelected()){
-                myRectangle = new javafx.scene.shape.Rectangle(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getX(),mouseEvent.getY());
+                rectangle = new javafx.scene.shape.Rectangle(mouseEvent.getX(), mouseEvent.getY(), 0.0,0.0);
+                myCanvas.getChildren().add(rectangle);
             }else if(myEllipse.isSelected()){
-
+                ellipse = new javafx.scene.shape.Ellipse(mouseEvent.getX(), mouseEvent.getY(), 0.0, 0.0);
+                myCanvas.getChildren().add(ellipse);
             }
             clickX = mouseEvent.getX();
             clickY = mouseEvent.getY();
             System.out.println(clickX);
             System.out.println(clickY);
+
         });
 
         myCanvas.setOnMouseDragged(mouseEvent -> {
@@ -75,10 +79,18 @@ public class Controller {
             if(myLine.isSelected()){
                 line.setEndX(mouseEvent.getX());
                 line.setEndY(mouseEvent.getY());
+                line.setStroke(myColorPicker.getValue());
             }else if(myRectangle.isSelected()){
-
+                // Ne fonctionne pas pour rectangle
+                rectangle.setWidth(Math.abs(mouseEvent.getX() - clickX));
+                rectangle.setHeight(Math.abs(mouseEvent.getY() - clickY));
+                rectangle.setFill(myColorPicker.getValue());
+                rectangle.setStroke(Color.BLACK);
             }else if(myEllipse.isSelected()){
-
+                ellipse.setRadiusX(Math.abs(mouseEvent.getX() - clickX));
+                ellipse.setRadiusY(Math.abs(mouseEvent.getY() - clickY));
+                ellipse.setFill(myColorPicker.getValue());
+                ellipse.setStroke(Color.BLACK);
             }
         });
 
@@ -134,18 +146,8 @@ public class Controller {
         myDelete.setOnAction(myDeleteHandler);
         myClone.setOnAction(myCloneHandler);
 
-    }
 
 
-    public void drawShape(Shape shape){
-
-    }
-
-    public void deleteShape(){
-
-    }
-
-    public void cloneShape(){
 
     }
 
