@@ -47,64 +47,29 @@ public class Controller {
 
     private EventHandler myDeleteHandler;
     private EventHandler myCloneHandler;
+    private EventHandler myColorHandler;
     private double clickX;
     private double clickY;
-
+    private javafx.scene.shape.Shape shape;
     private javafx.scene.transform.Scale scale;
 
     @FXML
     public void initialize(){
 
-
         myCanvas.setOnMousePressed(mouseEvent -> {
             if(myLine.isSelected()){
                 javafx.scene.shape.Line line = new Line(mouseEvent.getX(), mouseEvent.getY(),  mouseEvent.getX(),mouseEvent.getY() );
-                line.setStroke(myColorPicker.getValue() );
                 followLine(line);
-                line.setOnMouseClicked(mouseEvent1 -> {
-                    if(line.getScaleX()==1 && mySelect.isSelected()) {
-                        line.setScaleX(1.15);
-                        line.setScaleY(1.15);
-                    }else{
-                        line.setScaleX(1);
-                        line.setScaleY(1);
-                    }
-                });
-                myCanvas.getChildren().add(line);
 
             }else if(myRectangle.isSelected()){
                 javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(mouseEvent.getX(), mouseEvent.getY(), 0.0,0.0);
-                rectangle.setFill(myColorPicker.getValue());
-                rectangle.setStroke(Color.BLACK);
                 followRectangle(rectangle);
-                rectangle.setOnMouseClicked(mouseEvent1 -> {
-                    if(rectangle.getScaleX()==1 && mySelect.isSelected()){
-                        rectangle.setScaleX(1.15);
-                        rectangle.setScaleY(1.15);
-                    }else{
-                        rectangle.setScaleX(1);
-                        rectangle.setScaleY(1);
-                    }
-                });
-                myCanvas.getChildren().add(rectangle);
 
             }else if(myEllipse.isSelected()){
                 javafx.scene.shape.Ellipse ellipse = new javafx.scene.shape.Ellipse(mouseEvent.getX(), mouseEvent.getY(), 0.0, 0.0);
-                ellipse.setFill(myColorPicker.getValue());
-                ellipse.setStroke(Color.BLACK);
                 followEllipse(ellipse);
-                ellipse.setOnMouseClicked(mouseEvent1 -> {
-                    if(ellipse.getScaleX()==1 && mySelect.isSelected()){
-                        ellipse.setScaleX(1.15);
-                        ellipse.setScaleY(1.15);
-                    }else{
-                        ellipse.setScaleX(1);
-                        ellipse.setScaleY(1);
-                    }
-                });
-                myCanvas.getChildren().add(ellipse);
-
             }
+
             clickX = mouseEvent.getX();
             clickY = mouseEvent.getY();
         });
@@ -145,40 +110,124 @@ public class Controller {
         EventHandler<ActionEvent> myDeleteHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                if(mySelect.isSelected() && shape!=null){
+                    myCanvas.getChildren().remove(shape);
+                }
                 System.out.println("The delete button has been selected");
+            }
+        };
+
+        EventHandler<ActionEvent> myColorHandler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(mySelect.isSelected() && shape!=null){
+                    shape.setFill(myColorPicker.getValue());
+                }
+                System.out.println("The clone button has been selected");
             }
         };
 
         EventHandler<ActionEvent> myCloneHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                if(mySelect.isSelected() && shape!=null){
+                    javafx.scene.shape.Shape shape;
+                }
                 System.out.println("The clone button has been selected");
             }
         };
 
         myDelete.setOnAction(myDeleteHandler);
         myClone.setOnAction(myCloneHandler);
+        myColorPicker.setOnAction(myColorHandler);
     }
 
+
     public void followEllipse(javafx.scene.shape.Ellipse ellipse){
+        ellipse.setFill(myColorPicker.getValue());
+        ellipse.setStroke(Color.BLACK);
         myCanvas.setOnMouseDragged(mouseEvent -> {
             ellipse.setRadiusX(Math.abs(mouseEvent.getX() - clickX));
             ellipse.setRadiusY(Math.abs(mouseEvent.getY() - clickY));
         });
+        ellipse.setOnMouseClicked(mouseEvent1 -> {
+            if(ellipse.getScaleX()==1 && mySelect.isSelected()){
+                if(shape==null){
+                    ellipse.setScaleX(1.15);
+                    ellipse.setScaleY(1.15);
+                    shape = ellipse;
+                }else{
+                    shape.setScaleX(1);
+                    shape.setScaleY(1);
+                    ellipse.setScaleX(1.15);
+                    ellipse.setScaleY(1.15);
+                    shape = ellipse;
+                }
+            }else if(mySelect.isSelected()){
+                ellipse.setScaleX(1);
+                ellipse.setScaleY(1);
+            }
+        });
+        myCanvas.getChildren().add(ellipse);
+
     }
+
     public void followRectangle(javafx.scene.shape.Rectangle rectangle){
+        rectangle.setFill(myColorPicker.getValue());
+        rectangle.setStroke(Color.BLACK);
         myCanvas.setOnMouseDragged(mouseEvent -> {
             rectangle.setWidth(Math.abs(mouseEvent.getX() - clickX));
             rectangle.setHeight(Math.abs(mouseEvent.getY() - clickY));
         });
+        rectangle.setOnMouseClicked(mouseEvent1 -> {
+            if(rectangle.getScaleX()==1 && mySelect.isSelected()){
+                if(shape==null){
+                    rectangle.setScaleX(1.15);
+                    rectangle.setScaleY(1.15);
+                    shape = rectangle;
+                }else{
+                    shape.setScaleX(1);
+                    shape.setScaleX(1);
+                    rectangle.setScaleX(1.15);
+                    rectangle.setScaleY(1.15);
+                    shape = rectangle;
+                }
+            }else if(mySelect.isSelected()){
+                rectangle.setScaleX(1);
+                rectangle.setScaleY(1);
+            }
+        });
+        myCanvas.getChildren().add(rectangle);
+
     }
+
     public void followLine(javafx.scene.shape.Line line){
+        line.setStroke(myColorPicker.getValue());
         myCanvas.setOnMouseDragged(mouseEvent -> {
             line.setEndX(mouseEvent.getX());
             line.setEndY(mouseEvent.getY());
         });
+        line.setOnMouseClicked(mouseEvent1 -> {
+            if(line.getScaleX()==1 && mySelect.isSelected()){
+                if(shape==null){
+                    line.setScaleX(1.15);
+                    line.setScaleY(1.15);
+                    shape = line;
+                }else{
+                    shape.setScaleX(1);
+                    shape.setScaleX(1);
+                    line.setScaleX(1.15);
+                    line.setScaleY(1.15);
+                    shape = line;
+                }
+            }else if(mySelect.isSelected()){
+                line.setScaleX(1);
+                line.setScaleY(1);
+            }
+        });
+        myCanvas.getChildren().add(line);
+
 
     }
-
 
 }
