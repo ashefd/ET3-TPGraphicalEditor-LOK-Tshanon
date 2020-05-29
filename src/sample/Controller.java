@@ -8,8 +8,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
 
 import java.awt.*;
 
@@ -28,7 +32,7 @@ public class Controller {
     javafx.scene.control.RadioButton myLine;
 
     @FXML
-    Canvas myCanvas;
+    javafx.scene.layout.Pane myCanvas;
 
     @FXML
     javafx.scene.control.ColorPicker myColorPicker;
@@ -44,41 +48,38 @@ public class Controller {
     private double clickX;
     private double clickY;
 
+    private javafx.scene.shape.Line line;
+    private javafx.scene.shape.Rectangle Rectangle;
+    private javafx.scene.shape.Ellipse Ellipse;
 
-    // On va initialiser les variables aleatoires
     @FXML
     public void initialize(){
 
+        myCanvas.setOnMousePressed(mouseEvent -> {
+            if(myLine.isSelected()){
+                line = new Line(mouseEvent.getX(), mouseEvent.getY(),  mouseEvent.getX(),mouseEvent.getY() );
+                myCanvas.getChildren().add(line);
+            }else if(myRectangle.isSelected()){
+                myRectangle = new javafx.scene.shape.Rectangle(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getX(),mouseEvent.getY());
+            }else if(myEllipse.isSelected()){
 
-        GraphicsContext gc = myCanvas.getGraphicsContext2D();
-
-
-        myCanvas.setOnMouseClicked(mouseEvent -> {
+            }
             clickX = mouseEvent.getX();
             clickY = mouseEvent.getY();
             System.out.println(clickX);
             System.out.println(clickY);
         });
 
-
         myCanvas.setOnMouseDragged(mouseEvent -> {
+            // On va faire "augmenter" la taille de la forme
             if(myLine.isSelected()){
-                // fill
-                /*
-                javafx.scene.shape.Line a = new javafx.scene.shape.Line();
-                a.setStartX(clickX);
-                a.setStartY(clickY);
-                a.setEndX(mouseEvent.getX());
-                a.setEndY(mouseEvent.getY());
-
-                 */
+                line.setEndX(mouseEvent.getX());
+                line.setEndY(mouseEvent.getY());
             }else if(myRectangle.isSelected()){
 
             }else if(myEllipse.isSelected()){
 
             }
-            //gc.setFill(myColorPicker.getValue());
-            //gc.fillRect(mouseEvent.getX(), mouseEvent.getY(), 10, 10);
         });
 
         myLine.selectedProperty().addListener(new ChangeListener<Boolean>() {
