@@ -52,22 +52,33 @@ public class Controller {
 
         GraphicsContext gc = myCanvas.getGraphicsContext2D();
 
-        /*
+
         myCanvas.setOnMouseClicked(mouseEvent -> {
             clickX = mouseEvent.getX();
             clickY = mouseEvent.getY();
             System.out.println(clickX);
             System.out.println(clickY);
         });
-         */
 
 
         myCanvas.setOnMouseDragged(mouseEvent -> {
-            System.out.println(mouseEvent.getX());
-            System.out.println(mouseEvent.getY());
+            if(myLine.isSelected()){
+                // fill
+                /*
+                javafx.scene.shape.Line a = new javafx.scene.shape.Line();
+                a.setStartX(clickX);
+                a.setStartY(clickY);
+                a.setEndX(mouseEvent.getX());
+                a.setEndY(mouseEvent.getY());
 
-            gc.setFill(myColorPicker.getValue());
-            gc.fillRect(mouseEvent.getX(), mouseEvent.getY(), 10, 10);
+                 */
+            }else if(myRectangle.isSelected()){
+
+            }else if(myEllipse.isSelected()){
+
+            }
+            //gc.setFill(myColorPicker.getValue());
+            //gc.fillRect(mouseEvent.getX(), mouseEvent.getY(), 10, 10);
         });
 
         myLine.selectedProperty().addListener(new ChangeListener<Boolean>() {
