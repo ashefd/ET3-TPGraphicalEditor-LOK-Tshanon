@@ -139,8 +139,9 @@ public class Controller {
                     //shape = null;
                     shapes.setTranslateX(10);
                     shapes.setTranslateY(10);
-
                      */
+
+
                 }
                 System.out.println("The clone button has been selected");
             }
@@ -185,8 +186,8 @@ public class Controller {
         myCanvas.getChildren().add(ellipse);
         ellipse.setOnMouseDragged(mouseevent -> {
             if(shape!=null && mySelect.isSelected() && shape.equals(ellipse)){
-                shape.setTranslateX(mouseevent.getX());
-                System.out.println(shape.getTranslateX());
+                //shape.setTranslateX(clickX-mouseevent.getX());
+                //System.out.println(shape.getTranslateX());
                 /*
                 ellipse.setCenterX(mouseevent.getX());
                 ellipse.setCenterY(mouseevent.getY());
