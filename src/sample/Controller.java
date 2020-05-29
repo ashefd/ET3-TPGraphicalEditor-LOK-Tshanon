@@ -2,6 +2,8 @@ package sample;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -19,6 +21,7 @@ import javafx.scene.transform.Scale;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -104,7 +107,6 @@ public class Controller {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 System.out.println("Ellipse has been selected");
-                // TODO
             }
         });
 
@@ -133,7 +135,9 @@ public class Controller {
             public void handle(ActionEvent actionEvent) {
                 if(mySelect.isSelected() && shape!=null){
                     /*
-                    javafx.scene.shape.Shape shapes = new Shape();
+                    Shape shapes = new Shape(shape) {
+                        //TODO le constructeur
+                    };
                     shapes.setLayoutX(shape.getLayoutX());
                     shapes.setLayoutY(shape.getLayoutY());
                     //shape = null;
