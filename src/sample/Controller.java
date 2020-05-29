@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Scale;
 
 import java.awt.*;
@@ -131,7 +132,15 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(mySelect.isSelected() && shape!=null){
-                    javafx.scene.shape.Shape shape;
+                    /*
+                    javafx.scene.shape.Shape shapes = new Shape();
+                    shapes.setLayoutX(shape.getLayoutX());
+                    shapes.setLayoutY(shape.getLayoutY());
+                    //shape = null;
+                    shapes.setTranslateX(10);
+                    shapes.setTranslateY(10);
+
+                     */
                 }
                 System.out.println("The clone button has been selected");
             }
@@ -150,17 +159,22 @@ public class Controller {
             ellipse.setRadiusX(Math.abs(mouseEvent.getX() - clickX));
             ellipse.setRadiusY(Math.abs(mouseEvent.getY() - clickY));
         });
-        ellipse.setOnMouseClicked(mouseEvent1 -> {
+        ellipse.setOnMouseClicked(mouseEvent -> {
             if(ellipse.getScaleX()==1 && mySelect.isSelected()){
-                if(shape==null){
+                if(shape == null){
                     ellipse.setScaleX(1.15);
                     ellipse.setScaleY(1.15);
                     shape = ellipse;
+                }else if(shape.equals(ellipse)){
+                    shape = null;
+                    ellipse.setScaleX(1);
+                    ellipse.setScaleY(1);
                 }else{
                     shape.setScaleX(1);
                     shape.setScaleY(1);
                     ellipse.setScaleX(1.15);
                     ellipse.setScaleY(1.15);
+                    shape = null;
                     shape = ellipse;
                 }
             }else if(mySelect.isSelected()){
@@ -169,6 +183,18 @@ public class Controller {
             }
         });
         myCanvas.getChildren().add(ellipse);
+        ellipse.setOnMouseDragged(mouseevent -> {
+            if(shape!=null && mySelect.isSelected() && shape.equals(ellipse)){
+                shape.setTranslateX(mouseevent.getX());
+                System.out.println(shape.getTranslateX());
+                /*
+                ellipse.setCenterX(mouseevent.getX());
+                ellipse.setCenterY(mouseevent.getY());
+
+                 */
+            }
+        });
+
 
     }
 
@@ -185,6 +211,10 @@ public class Controller {
                     rectangle.setScaleX(1.15);
                     rectangle.setScaleY(1.15);
                     shape = rectangle;
+                }else if(shape.equals(rectangle)){
+                    shape = null;
+                    rectangle.setScaleX(1);
+                    rectangle.setScaleY(1);
                 }else{
                     shape.setScaleX(1);
                     shape.setScaleX(1);
@@ -213,6 +243,10 @@ public class Controller {
                     line.setScaleX(1.15);
                     line.setScaleY(1.15);
                     shape = line;
+                }else if(shape.equals(line)){
+                    shape = null;
+                    line.setScaleX(1);
+                    line.setScaleY(1);
                 }else{
                     shape.setScaleX(1);
                     shape.setScaleX(1);
